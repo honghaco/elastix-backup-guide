@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-/*
+/**
   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
   Codificación: UTF-8
   +----------------------------------------------------------------------+
@@ -28,15 +28,17 @@
   | The Initial Developer of the Original Code is PaloSanto Solutions    |
   +----------------------------------------------------------------------+
   $Id: dhcpconfig.php,v 1.1 2007/01/09 23:49:36 alex Exp $
-*/
+**/
 load_default_timezone();
 
 // All of the following assumes this script runs as root
 $sBackupFilename = 'elastixbackup-'.date('YmdHis').'-ab.tar';
-$sBackupDir = '/var/www/backup';
-$retval = NULL;
-system('/usr/share/elastix/privileged/backupengine --backup --backupfile '.
-    $sBackupFilename.' --tmpdir '.$sBackupDir, $retval);
+// Change the following path to your own backup dir
+$sBackupDir = '/path/to/backup/dir';
+$retval = null;
+// Specify a list of components that will be backup, otherwise "all" as the default
+$sComponents=array('as_db','as_config_files','as_mohmp3','as_dahdi','fax','email','endpoint','otros','otros_new');
+system('/path/to/backupengine --backup --components '.implode(",", $sComponents).' --backupfile '.$sBackupFilename.' --tmpdir '.$sBackupDir, $retval);
 exit($retval);
 
 function load_default_timezone()
@@ -46,7 +48,7 @@ function load_default_timezone()
         $sDefaultTimezone = 'America/New_York';
         if (file_exists('/etc/sysconfig/clock')) {
             foreach (file('/etc/sysconfig/clock') as $s) {
-                $regs = NULL;
+                $regs = null;
                 if (preg_match('/^ZONE\s*=\s*"(.+)"/', $s, $regs)) {
                     $sDefaultTimezone = $regs[1];
                 }
@@ -56,3 +58,4 @@ function load_default_timezone()
     date_default_timezone_set($sDefaultTimezone);
 }
 ?>
+
