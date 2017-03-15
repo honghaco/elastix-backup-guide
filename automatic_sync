@@ -1,0 +1,44 @@
+#!/bin/env bash
+
+# THIS VERY SIMPLE AND UGLY SCRIPT
+
+# Following is what this script was intended:
+# - Backup a specified MySQL database.
+# - Rsync to a remote those location
+#
+
+# Specify your ssh acc, and the server: ip or hostname
+SSH_USER=your_username
+SSH_SERVER=your_server_domain
+
+# Give the destination to sync to, bwlimit, sync opts if there is/are
+# The destination is on the SSH_SERVER not local
+RSYNC_DEST_DIR="/dir/will/be/synced/to/on/the/remote/sys/"
+RSYNC_BWLIMIT="5120" # 5MB, unit in KpPS
+RSYNC_OPT="" # Specify rsync option if there is
+
+if [ -n $RSYNC_BWLIMIT ]
+then
+    RSYNC_OPT="${RSYNC_OPT} --bwlimit=$RSYNC_BWLIMIT"
+fi
+
+# Get current datetime
+CURRENT_TIME=$(date +%Y-%m-%d-%H-%M-%Z)
+
+# Just a path where this script and/or some other file live on
+BACK_DIR="/path/to/backup/dir"
+# The folder that holds rsync log files
+SYNC_LOG_DIR="synclog"
+
+# Specify the file that contains all the location need to be synced
+INCLUDE_FILE_NAME="included-items.txt"
+INCLUDE_FILE=$BACK_DIR/bin/$INCLUDE_FILE_NAME
+
+# The sync log file name and path
+SYNC_LOG_FILE="$BACK_DIR/$SYNC_LOG_DIR/$CURRENT_TIME.log"
+
+# Then sync
+rsync -ar $RSYNC_OPT --files-from=$INCLUDE_FILE \
+/ $SSH_USER@$SSH_SERVER:$RSYNC_DEST_DIR \
+> $SYNC_LOG_FILE 2>&1
+
