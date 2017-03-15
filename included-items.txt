@@ -1,0 +1,4 @@
+/var/spool/asterisk
+/var/www/backup
+/var/log/asterisk/cdr-csv
+/path/to/backup/dir
