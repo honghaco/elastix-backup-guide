@@ -713,8 +713,9 @@ function action_runBackup($opt)
 		exec('rm -rf '.escapeshellarg($sWorkingDir), $output, $retval);
 
 		// Switch tarball file permission to asterisk:asterisk
-		chown($sBackupPath, 'asterisk');
-		chgrp($sBackupPath, 'asterisk');
+        // Edited: you DO NOT need to do this any more
+		//chown($sBackupPath, 'asterisk');
+		//chgrp($sBackupPath, 'asterisk');
     }
 
     return $bGlobalSuccess;
