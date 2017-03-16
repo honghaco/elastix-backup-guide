@@ -1,0 +1,6 @@
+PATH=/var/backup/bin:/bin:/usr/bin:/usr/local/bin
+SHELL=/bin/bash
+MAILTO=""
+0 19 * * * automatic_sync
+0 12 * * * automatic_backup
+
