@@ -25,7 +25,7 @@ fi
 # Get current datetime
 CURRENT_TIME=$(date +%Y-%m-%d-%H-%M-%Z)
 
-# Just a path where this script and/or some other file live on
+# The path where this script and/or some other file live on
 BACK_DIR="/path/to/backup/dir"
 # The folder that holds rsync log files
 SYNC_LOG_DIR="synclog"
