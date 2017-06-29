@@ -37,7 +37,7 @@ $sBackupFilename = 'elastixbackup-'.date('YmdHis').'-ab.tar';
 $sBackupDir = '/path/to/backup/dir';
 $retval = null;
 // Specify a list of components that will be backup, otherwise "all" as the default
-$sComponents=array('as_db','as_config_files','as_mohmp3','as_dahdi','fax','email','endpoint','otros','otros_new');
+$sComponents=array('endpoint','as_db','as_config_files','as_sounds','as_mohmp3','as_dahdi');
 system('/path/to/backupengine --backup --components '.implode(",", $sComponents).' --backupfile '.$sBackupFilename.' --tmpdir '.$sBackupDir, $retval);
 exit($retval);
 
